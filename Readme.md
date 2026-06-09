@@ -26,74 +26,82 @@
 - **Notification**
 
 ## Схема сущностей
+(Вставьте этот код в plantuml online, у меня без впн на компьютере не открывается)
 
 @startuml
 
 entity users {
-  id : BIGINT <<PK>>
-  login : VARCHAR(50)
-  email : VARCHAR(100)
-  password_hash : VARCHAR(255)
+  * id : BIGINT «PK»
+  --
+  * login : VARCHAR(50)
+  * email : VARCHAR(100)
+  * password_hash : VARCHAR(255)
   role : VARCHAR(20)
-  created_at : TIMESTAMP
+  * created_at : TIMESTAMP
 }
 
 entity posts {
-  id : BIGINT <<PK>>
-  author_id : BIGINT <<FK>>
+  * id : BIGINT «PK»
+  * author_id : BIGINT «FK»
+  --
   text : TEXT
   status : VARCHAR(20)
-  created_at : TIMESTAMP
-  updated_at : TIMESTAMP
+  * created_at : TIMESTAMP
+  * updated_at : TIMESTAMP
 }
 
 entity comments {
-  id : BIGINT <<PK>>
-  post_id : BIGINT <<FK>>
-  author_id : BIGINT <<FK>>
+  * id : BIGINT «PK»
+  * post_id : BIGINT «FK»
+  * author_id : BIGINT «FK»
+  --
   text : VARCHAR(1000)
   status : VARCHAR(20)
-  created_at : TIMESTAMP
+  * created_at : TIMESTAMP
 }
 
 entity likes {
-  id : BIGINT <<PK>>
-  post_id : BIGINT <<FK>>
-  user_id : BIGINT <<FK>>
-  created_at : TIMESTAMP
+  * id : BIGINT «PK»
+  * post_id : BIGINT «FK»
+  * user_id : BIGINT «FK»
+  --
+  * created_at : TIMESTAMP
 }
 
 entity reports {
-  id : BIGINT <<PK>>
-  post_id : BIGINT <<FK>>
-  author_id : BIGINT <<FK>>
+  * id : BIGINT «PK»
+  * post_id : BIGINT «FK»
+  * author_id : BIGINT «FK»
+  --
   reason : VARCHAR(500)
   status : VARCHAR(20)
   version : BIGINT
-  created_at : TIMESTAMP
+  * created_at : TIMESTAMP
 }
 
 entity subscriptions {
-  id : BIGINT <<PK>>
-  follower_id : BIGINT <<FK>>
-  followed_id : BIGINT <<FK>>
+  * id : BIGINT «PK»
+  * follower_id : BIGINT «FK»
+  * followed_id : BIGINT «FK»
 }
 
 entity feed_items {
-  id : BIGINT <<PK>>
-  user_id : BIGINT <<FK>>
-  post_id : BIGINT <<FK>>
+  * id : BIGINT «PK»
+  * user_id : BIGINT «FK»
+  * post_id : BIGINT «FK»
+  --
   score_rank : BIGINT
   view_status : VARCHAR(20)
-  generated_at : TIMESTAMP
+  * generated_at : TIMESTAMP
 }
 
 entity notifications {
-  id : BIGINT <<PK>>
-  recipient_id : BIGINT <<FK>>
+  * id : BIGINT «PK»
+  * recipient_id : BIGINT «FK»
+  --
   text : VARCHAR(500)
   is_read : BOOLEAN
-  created_at : TIMESTAMP
+  * created_at : TIMESTAMP
 }
 
 ' === Связи пользователя ===
