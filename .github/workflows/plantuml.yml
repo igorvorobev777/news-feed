@@ -1,4 +1,4 @@
-name: PlantUML Generator
+name: Generate PlantUML Diagrams
 
 on:
   push:
@@ -6,21 +6,30 @@ on:
       - 'Readme.md'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  generate:
+  build:
     runs-on: ubuntu-latest
+    
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
     
-    - name: Generate PlantUML
-      uses: Timmy/plantuml-action@v1
+    - name: Generate PlantUML diagrams
+      uses: holowinski/plantuml-github-action@v1.2024.3
       with:
-        args: '-tvsvg Readme.md'
+        args: "."
     
-    - name: Commit changes
+    - name: Commit and push generated diagrams
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add *.svg || true
-        git commit -m "Update diagrams" || true
-        git push
+        git add *.png *.svg || true
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Generate PlantUML diagrams [skip ci]"
+          git push
+        fi
